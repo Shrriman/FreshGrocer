@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FreshGrocer - Your Friendly Grocery Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman';
+    scroll-behavior: smooth;
+    background: #f9fefa;
+    color: #2f2f2f;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  img {
+    max-width: 100%;
+    display: block;
+  }
+  /* Navbar */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: #2c6e49;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+  nav .logo {
+    font-weight: 700;
+    font-size: 24px;
+    color: #e8eaea;
+    letter-spacing: 1px;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.8rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+  nav ul li {
+    font-weight: 600;
+    color: #d4f1be;
+  }
+  nav ul li a:hover,
+  nav ul li a:focus {
+    color: #a9d18e;
+  }
+  /* Hero Section */
+  header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #a3d9a5 0%, #3a7d44 100%);
+    color: #f9fefa;
+    text-align: center;
+    padding: 0 1rem;
+    padding-top: 4.5rem; /* offset for fixed nav */
+  }
+  header h1 {
+    font-size: 3.2rem;
+    margin-bottom: 0.4rem;
+    letter-spacing: 1.5px;
+    text-shadow: #4caf50;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            height: 13%;
+            justify-content: center;
+            align-items: center;
+            color: rgb(255, 255, 255);
+            text-shadow: 2px 2px 5px #000000;
+            font-size: 3.82em;
+        }
+
+
+
+
+  header p {
+    font-size: 1.3rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+  }
+  header a.button {
+    background: #e8eaea;
+    color: #2c6e49;
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+  }
+  header a.button:hover,
+  header a.button:focus {
+    background: #d4f1be;
+    outline: none;
+  }
+  /* Sections Container */
+  main {
+    max-width: 1100px;
+    margin: 3rem auto 6rem;
+    padding: 0 1rem;
+  }
+  /* Products Section */
+  #products {
+    margin-top: 2rem;
+  }
+  #products h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #2c6e49;
+    font-weight: 700;
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.8rem;
+  }
+  .product-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .product-card:hover,
+  .product-card:focus-within {
+    transform: translateY(-7px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    cursor: pointer;
+    outline: none;
+  }
+  .product-img {
+    height: 160px;
+    object-fit: cover;
+    border-bottom: 3px solid #3a7d44;
+  }
+  .product-content {
+    padding: 1rem 1.2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .product-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 0.4rem 0;
+    color: #2c6e49;
+  }
+  .product-desc {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    color: #555;
+    flex-grow: 1;
+  }
+  .product-price {
+    font-weight: 600;
+    color: #4caf50;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  .product-btn {
+    background: #3a7d44;
+    border: none;
+    color: white;
+    padding: 0.6rem 0;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    display: block;
+    user-select: none;
+  }
+  .product-btn:hover,
+  .product-btn:focus {
+    background: #2c6e49;
+    outline: none;
+  }
+  /* About Section */
+  #about {
+    margin-top: 4rem;
+    padding: 2rem 1rem;
+    background: #e6f0d4;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(46, 70, 15, 0.25);
+  }
+  #about h2 {
+    color: #2c6e49;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  #about p {
+    max-width: 700px;
+    margin: 0 auto;
+    color: #3a5630;
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+   /* Contact Section */
+  #contact {
+    margin-top: 4rem;
+    padding: 2rem 1rem;
+    background: #2c6e49;
+    border-radius: 12px;
+    color: #e8eaea;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  }
+  #contact h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    font-size: 2rem;
+  }
+  #contact form {
+    display: flex;
+    flex-direction: column;
+  }
+  #contact input, #contact textarea {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+  }
+  #contact input:focus, #contact textarea:focus {
+    outline: 3px solid #d4f1be;
+  }
+  #contact button {
+    background: #d4f1be;
+    border: none;
+    padding: 0.8rem 1rem;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #2c6e49;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+  #contact button:hover,
+  #contact button:focus {
+    background: #a0ca83;
+    outline: none;
+  }
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: #3a7d44;
+    color: #e8eaea;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 5rem;
+  }
+  .features {
+      display: flex;
+      justify-content: space-around;
+      padding: 4rem 2rem;
+      background: transparent;
+      text-align: center;
+    }
+
+    .features div {
+      max-width: 300px;
+    }
+
+    .features h3 {
+      color: #4caf50;
+      margin-bottom: 1rem;
+    }
+  /* Responsive */
+  @media (max-width: 600px) {
+    header h1 {
+      font-size: 2.5rem;
+    }
+        #contact {
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .product-btn {
+      font-size: 0.95rem;
+    }
+  }
+  .left-section {
+          display: flex;
+          align-items: center;
+          justify-content:left;
+        }
+  .image {
+    height: 7%;
+    width: 19%;
+    margin-right: 10px; /* Space between logo and text */
+    left: 0;
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class = "left-section">
+  <img class = "image" src = "c:\Users\MAA\Downloads\Screenshot_2025-06-02_181831-removebg-preview.png">
+  <div class="logo">
+    FreshGrocer</div></div>
+  <ul>
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+<header id="hero">
+  <h1>Welcome to FreshGrocer</h1>
+  <p>Your friendly neighborhood grocery shop, bringing fresh and quality products to your doorstep.</p>
+<a href="#products" class="button">Shop Now</a>
+</header>
+<main>
+  <section id="products">
+    <h2>Fresh Products</h2>
+    <div class="product-grid">
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.54 PM.jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Apple</h3>
+          <p class="product-desc">Juicy and crisp apples, perfect for your healthy snacks and desserts.</p>
+          <div class="product-price">$200/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.55 PM (2).jpeg" alt="Organic Bananas" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Banana</h3>
+          <p class="product-desc">Sweet and naturally grown bananas, rich in vitamins and minerals.</p>
+          <div class="product-price">$60/dozen</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Organic Bananas to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.55 PM (1).jpeg" alt="Fresh Carrots" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Grapes</h3>
+          <p class="product-desc">Sweet and juicy grapes, perfect for snacking or adding a burst of flavor to your salads.</p>
+          <div class="product-price">$80/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Carrots to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.55 PM.jpeg" alt="Organic Milk" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Papaya</h3>
+          <p class="product-desc">Naturally sweet and nutrient-rich papaya, perfect for your morning routine.</p>
+          <div class="product-price">$70/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Organic Milk to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.54 PM (1).jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Orange</h3>
+          <p class="product-desc">Juicy and tangy oranges, packed with natural vitamin C for a refreshing boost.</p>
+          <div class="product-price">$60/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.52 PM (1).jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Pumpkin</h3>
+          <p class="product-desc">Fresh and tender pumpkins, perfect for curries, soups, and temple-style delicacies.</p>
+          <div class="product-price">$20/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.53 PM (1).jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Mango</h3>
+          <p class="product-desc">Lusciously sweet and aromatic mangoes, perfect for juices, desserts, or a refreshing summer treat.</p>
+          <div class="product-price">$60/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.53 PM.jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Pomegranate</h3>
+          <p class="product-desc">Bursting with ruby-red seeds, our pomegranates are rich in taste and packed with natural goodness.</p>
+          <div class="product-price">$120/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.52 PM (2).jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Watermelon</h3>
+          <p class="product-desc">Cool, crisp, and wonderfully sweet – our watermelons are your perfect summer refreshment.</p>
+          <div class="product-price">$25/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.50.43 PM.jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Organic Milk</h3>
+          <p class="product-desc">Pure organic milk from local farms, fresh and healthy.</p>
+          <div class="product-price">$25/packet</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.52 PM.jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Potato</h3>
+          <p class="product-desc">Versatile and essential – our fresh potatoes are perfect for all your delicious everyday meals.</p>
+          <div class="product-price">$30/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.51 PM (1).jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Brinjal</h3>
+          <p class="product-desc">Fresh and firm brinjals, perfect for curries, grilling, or roasting to bring rich flavors to your meals.</p>
+          <div class="product-price">$40/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.51 PM.jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Tomato</h3>
+          <p class="product-desc">Ripe and juicy tomatoes, perfect for salads, sauces, and cooking to add a burst of fresh flavor.</p>
+          <div class="product-price">$20/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.50 PM (1).jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Lady Finger</h3>
+          <p class="product-desc">Farm-fresh lady fingers that add a delightful texture and flavor to your meals.</p>
+          <div class="product-price">$40/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.50 PM.jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Cauliflower</h3>
+          <p class="product-desc">Fresh and crunchy cauliflower, perfect for roasting, steaming, or making delicious curries.</p>
+          <div class="product-price">$30/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.49 PM (1).jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Cabbage</h3>
+          <p class="product-desc">Tender and crunchy cabbage, ideal for a variety of dishes.</p>
+          <div class="product-price">$25/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.49 PM.jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Lemon</h3>
+          <p class="product-desc">Fresh and tangy lemons, perfect for adding zest to your dishes and refreshing drinks.</p>
+          <div class="product-price">$60/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.48 PM.jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Chilli</h3>
+          <p class="product-desc">Fresh and spicy chilli peppers, adding the perfect heat to your favorite dishes.</p>
+          <div class="product-price">$30/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.39 PM.jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Bitter Gourd</h3>
+          <p class="product-desc">Fresh and slightly bitter bitter gourd, known for its health benefits and perfect for stir-fries and traditional dishes.</p>
+          <div class="product-price">$25/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img src="c:\Users\MAA\Downloads\WhatsApp Image 2025-06-02 at 4.40.29 PM.jpeg" alt="Fresh Apples" class="product-img" />
+        <div class="product-content">
+          <h3 class="product-title">Carrot</h3>
+          <p class="product-desc">Crunchy carrots packed with nutrients and perfect for cooking or snacking.</p>
+          <div class="product-price">$45/kg</div>
+          <div class="product-btn" tabindex="0" aria-label="Add Fresh Apples to cart" role="button">Add to Cart</div>
+        </div>
+      </article>
+    </div>
+  </section>
+  <section id="about">
+    <h2>About FreshGrocer</h2>
+    <p>
+      FreshGrocer is your new neighborhood grocery store, dedicated to bringing you fresh fruits, vegetables, dairy, and organic products. With a focus on quality and freshness, we promise friendly service and fair prices. We're here to serve our community with the best groceries every day!
+    </p>
+    <section class="features">
+    <div>
+      <h3>100% Organic</h3>
+      <p>Certified organic products delivered to your door.</p>
+    </div>
+    <div>
+      <h3>Fast Delivery</h3>
+      <p>Get your groceries in under 60 minutes!</p>
+    </div>
+    <div>
+      <h3>Best Prices</h3>
+      <p>Affordable rates on premium quality items.</p>
+    </div>
+  </section>
+    
+    </section>
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <form action="#" method="post" novalidate>
+      <input type="text" name="name" placeholder="Your Name" required aria-required="true" />
+      <input type="email" name="email" placeholder="Your Email" required aria-required="true" />
+      <textarea name="message" rows="4" placeholder="Your Message" required aria-required="true"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  © 2025 FreshGrocer. All rights reserved. Contact: +91 76069 10751
+</footer>
+</body>
+</html>
