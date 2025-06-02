@@ -311,6 +311,10 @@
           align-items: center;
           justify-content:left;
         }
+  .mobile-break {
+  display: none;
+}
+
   /* Responsive */
   @media (max-width: 600px) {
     nav ul {
@@ -333,6 +337,9 @@
     }
     .features {
       padding: 4rem 0rem;
+    }
+    .mobile-break {
+      display: inline;
     }
   }
 </style>
@@ -556,7 +563,7 @@
       <p>Get your groceries in under 60 minutes!</p>
     </div>
     <div>
-      <h3>Best<br> Prices</h3>
+      <h3>Best<span class="mobile-break"><br></span><br> Prices</h3>
       <p>Affordable rates on premium quality items.</p>
     </div>
   </section>
